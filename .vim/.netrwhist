@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/home/max/intel/fsp/build'
+let g:netrw_dirhist_2='/opt/freescale/ltib/usr/src/rpm/BUILD/lkc-1.4/lxdialog'
+let g:netrw_dirhist_3='/home/max/mx6/kernel_imx/arch/arm/configs'
+let g:netrw_dirhist_4='/home/max/tizen/img/loopmnt/etc/X11/applnk'
