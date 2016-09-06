@@ -2,3 +2,6 @@ dev_dbg hijacked by dynamic-debug
 echo "file drivers/spi/spi-pxa2xx.c +p" > /sys/kernel/debug/dynamic_debug/control 
 and still need to set the log level
 Documentation/dynamic-debug-howto.txt
+
+
+wxformbuilder + wxpy
