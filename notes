@@ -5,3 +5,5 @@ Documentation/dynamic-debug-howto.txt
 
 
 wxformbuilder + wxpy
+
+eclipse proxy settings: socks proxy cause connection failure --- clear socks proxy and only set http/https proxy
