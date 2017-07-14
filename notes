@@ -1,9 +1,26 @@
+1. dynamic debug
 dev_dbg hijacked by dynamic-debug
 echo "file drivers/spi/spi-pxa2xx.c +p" > /sys/kernel/debug/dynamic_debug/control 
 and still need to set the log level
 Documentation/dynamic-debug-howto.txt
 
-
+2. python UI
 wxformbuilder + wxpy
 
+3. eclipse setting
 eclipse proxy settings: socks proxy cause connection failure --- clear socks proxy and only set http/https proxy
+
+4.kill -USR1 $(pgrep ^dd)
+
+5. Makefile debug print
+$(error VAR is $(VAR))
+$(warning  VAR is $(VAR))
+$(info VAR is $(VAR))
+
+6. solve "no symbol in the stack trace":
+CONFIG_KALLSYMS=y
+
+7. 8250 serial console enable/disable:
+CONFIG_SERIAL_8250_CONSOLE
+
+8. repo help <command> instead of repo <command> --help will give out more info
