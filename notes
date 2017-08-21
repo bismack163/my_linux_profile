@@ -24,3 +24,13 @@ CONFIG_KALLSYMS=y
 CONFIG_SERIAL_8250_CONSOLE
 
 8. repo help <command> instead of repo <command> --help will give out more info
+
+9. eclipse CDT for AOSP:
+  - add source filter to exclude some dirs
+  - window -> show view -> other -> general -> error log to show parser errors
+  - Project -> c/c++ index -> create paser log file to get parser log of current opened file
+
+10. tracing
+  - cat set_event to dump all enabled trace points
+  - echo > set_event to clear all enabled trace points
+  - echo > trace to clear trace buffer
