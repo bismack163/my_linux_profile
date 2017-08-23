@@ -34,3 +34,11 @@ CONFIG_SERIAL_8250_CONSOLE
   - cat set_event to dump all enabled trace points
   - echo > set_event to clear all enabled trace points
   - echo > trace to clear trace buffer
+
+11. history -a
+
+12.update-alternatives
+sudo update-alternatives --config javap
+sudo update-alternatives --install /usr/bin/javap javap /opt/jdk1.6.0_45/bin/javap 300
+sudo update-alternatives --config javap
+
