@@ -38,7 +38,25 @@ CONFIG_SERIAL_8250_CONSOLE
 11. history -a
 
 12.update-alternatives
-sudo update-alternatives --config javap
-sudo update-alternatives --install /usr/bin/javap javap /opt/jdk1.6.0_45/bin/javap 300
-sudo update-alternatives --config javap
+    sudo update-alternatives --config javap
+    sudo update-alternatives --install /usr/bin/javap javap /opt/jdk1.6.0_45/bin/javap 300
+    sudo update-alternatives --config javap
+    
+13. change java version
+  - export PATH=/usr/lib/jvm/java-8-openjdk-amd64/bin/:$PATH
+  - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+  - export JAVA_HOME=/opt/jdk1.6.0_45/
+  - export PATH=/opt/jdk1.6.0_45/bin/:$PATH
+
+14. reinstall xserver
+    boot into recovery;
+    sudo apt-get purge  xorg "xserver-*" xorg-dev
+    sudo apt-get purge lightdm
+    //sudo apt-get purge plymouth
+    sudo apt-get autoremove
+    lspci -k | grep -A 2 -i "VGA
+    lsmod | grep nvidia
+    sudo ./NVIDIA-Linux-x86_64-375.26.run --uninstall
+    reboot into console:
+    sudo apt-get install xauth xorg openbox lightdm
 
