@@ -60,3 +60,21 @@ CONFIG_SERIAL_8250_CONSOLE
     reboot into console:
     sudo apt-get install xauth xorg openbox lightdm
 
+15. eclipse for aosp
+  - new workspace --> disable "build automatically"
+  - edit .classpath --> new java project to aosp --> refresh
+  - open c/c++ perspective --> switch to c/c++ project --> Makefile project; other toolchain --> 
+    import android-include-paths.xml android-symbols.xml --> add source path filter -->rebuild index
+      - https://mhandroid.wordpress.com/2011/01/23/using-eclipse-for-android-cc-development/
+      - http://book.51cto.com/art/201404/435769.htm
+  - ignore .git/.repo directory: Project -> Properties -> Resource -> Resource Filters and then add an "exclude" filter for type "Folder" with name ".git"
+      - https://superuser.com/questions/225343/how-to-have-git-folders-ignored-by-eclipse-projects/225364#225364
+  - rebuild workspace reusing .project/.cproject
+      - delete workspace dir
+      - create workspace, import project from aosp dir
+      - remember to "ignore .git .repo"
+  - get index error/log for c/c++ source file
+      - open the c/c++ source file
+      - project --> c/c++ indexer --> create parser log file
+  - open progress view when refeshing/parsing to see stuck on which file
+  
