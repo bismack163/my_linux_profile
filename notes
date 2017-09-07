@@ -78,3 +78,30 @@ CONFIG_SERIAL_8250_CONSOLE
       - project --> c/c++ indexer --> create parser log file
   - open progress view when refeshing/parsing to see stuck on which file
   
+16. git via proxy
+  - create git-proxy script
+      cat /usr/local/bin/git-proxy
+      #!/bin/bash
+      # $1 = hostname, $2 = port
+      PROXY=child-prc.intel.com
+      exec socat STDIO SOCKS4:$PROXY:$1:$2
+  - add to ~/.gitconfig
+    [core]
+       gitProxy = git-proxy
+  - git url override
+     [url "ssh://android.intel.com:29418/"]
+           pushInsteadOf=ssh://android.intel.com/
+           pushInsteadOf=ssh://android.intel.com:29418/
+           pushInsteadOf=ssh://jfumg-gcrmirror.jf.intel.com/
+           pushInsteadOf=ssh://jfumg-gcrmirror.jf.intel.com:29418/
+     [url "ssh://mcg-psi-gcrmirror2.sh.intel.com"]
+          insteadOf = git://jfumg-gcrmirror.jf.intel.com
+17. ssh config:
+  - .ssh/config
+        host 119.29.82.191
+        port 29418
+        user gituser123
+        ProxyCommand /bin/nc -X 5 -x proxy-prc.intel.com:1080 %h %p
+        IdentityFile ~/.ssh/id_rsa_fibocom
+        StrictHostKeyChecking no
+
