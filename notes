@@ -34,6 +34,7 @@ CONFIG_SERIAL_8250_CONSOLE
   - cat set_event to dump all enabled trace points
   - echo > set_event to clear all enabled trace points
   - echo > trace to clear trace buffer
+  - trace_marker for tracing from user space
 
 11. history -a
 
