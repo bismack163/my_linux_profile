@@ -78,6 +78,7 @@ CONFIG_SERIAL_8250_CONSOLE
       - open the c/c++ source file
       - project --> c/c++ indexer --> create parser log file
   - open progress view when refeshing/parsing to see stuck on which file
+  - C/C++ General -> Preprocessor include -> CNU C / GNU C++ -> CDT User settings entries -> add include file "build/core/combo/include/arch/target_linux-x86/AndroidConfig.h"
   
 16. git via proxy
   - create git-proxy script
