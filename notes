@@ -107,3 +107,10 @@ CONFIG_SERIAL_8250_CONSOLE
         IdentityFile ~/.ssh/id_rsa_fibocom
         StrictHostKeyChecking no
 
+18. Yocto
+  - list recipes:
+      bitbake -s
+      bitbake-layers show-recipes
+  - force rebuild:
+      bitbake -c compile -f somepackage
+      bitbake somepackage
