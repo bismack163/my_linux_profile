@@ -126,3 +126,4 @@ CONFIG_SERIAL_8250_CONSOLE
   CONFIG_DEBUG_INFO=y
   For ko: objdump -dSlr my_module.ko > my_module.disasm  
   
+20. list_add the same element twice may cause list_del twice on the element and crash
