@@ -131,3 +131,12 @@ CONFIG_SERIAL_8250_CONSOLE
 21. out/host/linux-x86/bin/emulator -sysdir out/target/product/generic/ -skindir development/tools/emulator/skins/ -skin WVGA800 -memory 512 -partition-size 1024 -http-proxy http://proxy-jf.intel.com:912
 #out/host/linux-x86/bin/emulator -sysdir out/target/product/generic/ -system out/target/product/generic/system.img -ramdisk out/target/product/generic/ramdisk.img -data out/target/product/generic/userdata.img -sdcard sdcard.img -skindir development/tools/emulator/skins/ -skin WVGA800 -scale 0.7 -memory 512 -partition-size 1024
 
+22. usb sysfs node decoding:
+    /sys/bus/usb/devices/
+    usb[busnum]: usb1, usb2, usb3 ---- usb host controllers
+    [busnum]-[portnum]: 1.2, 2.2 ---- usb device at root port portnum
+    [busnum]-[portnum].[portnum1]: 2.2.1 ---- usb device at hub portnum1
+    [busnum]-[portnum].[portnum1]:[configuration].[interface number] ---- device created by usb_set_configuration
+    related functions: usb_alloc_dev, usb_set_configuration
+    
+    
