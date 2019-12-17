@@ -139,4 +139,14 @@ CONFIG_SERIAL_8250_CONSOLE
     [busnum]-[portnum].[portnum1]:[configuration].[interface number] ---- device created by usb_set_configuration
     related functions: usb_alloc_dev, usb_set_configuration
     
-    
+23. pci sysfs node decoding:
+/sys/devices/pci0000:00/0000:00:13.2/0000:02:00.0/
+/sys/devices/pci<0000:bus>/<0000:bus>:<dev num>.<func>/<0000:bus>:00.0/
+
+24. gold fish kernel
+git clone https://android.googlesource.com/kernel/goldfish/ -b android-goldfish-3.4
+MYDROID=xxxx
+make ARCH=arm goldfish_armv7_defconfig
+echo $MYDROID
+make ARCH=arm CROSS_COMPILE=$MYDROID/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin/arm-linux-androideabi- -j8
+emulator -kernel goldfish/arch/arm/boot/zImage -show-kernel &
