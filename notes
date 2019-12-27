@@ -150,3 +150,11 @@ make ARCH=arm goldfish_armv7_defconfig
 echo $MYDROID
 make ARCH=arm CROSS_COMPILE=$MYDROID/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin/arm-linux-androideabi- -j8
 emulator -kernel goldfish/arch/arm/boot/zImage -show-kernel &
+
+25. odex reverse
+#java -jar oat2dex.jar boot system/framework/arm/boot.oat
+#java -jar oat2dex.jar -o commonservice/ system/app/commonservice-release/oat/arm/commonservice-release.odex system/framework/arm/boot.oat-dex/
+#cd commonservice/
+#for fn in ./*.dex; do ./jadx/bin/jadx -d out $fn; done;
+to get AndroidManifest.xml:
+#java -jar ~/bin/apktool_2.4.0.jar d ../../system/app/commonservice-release/commonservice-release.apk -o out
