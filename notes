@@ -158,3 +158,7 @@ emulator -kernel goldfish/arch/arm/boot/zImage -show-kernel &
 #for fn in ./*.dex; do ./jadx/bin/jadx -d out $fn; done;
 to get AndroidManifest.xml:
 #java -jar ~/bin/apktool_2.4.0.jar d ../../system/app/commonservice-release/commonservice-release.apk -o out
+
+26. pycryptodome vs pycryptodomex
+pycryptodome has some association to pyCrypto and can be considered a drop in replacement when migrating from PyCrypto to PyCryptodome.
+pycryptodomex is a standalone version of PyCryptodome with a different naming convention; instead of the package Crypto, you have to use Cryptodome. In the case that PyCrypto is required for legacy purposes, pycryptodome should be used.
