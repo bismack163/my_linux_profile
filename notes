@@ -162,3 +162,11 @@ to get AndroidManifest.xml:
 26. pycryptodome vs pycryptodomex
 pycryptodome has some association to pyCrypto and can be considered a drop in replacement when migrating from PyCrypto to PyCryptodome.
 pycryptodomex is a standalone version of PyCryptodome with a different naming convention; instead of the package Crypto, you have to use Cryptodome. In the case that PyCrypto is required for legacy purposes, pycryptodome should be used.
+
+29. gdb to disassmble kernel
+prebuilts/gdb/linux-x86/bin/gdb vmlinux 
+(gdb) set debug aarch64
+(gdb) set architecture aarch64
+(gdb) print /x &snd_pcm_stream_lock_irq
+$1 = 0xffff0000087ae3fc
+(gdb) disassemble /m 0xffff0000087ae3fc
