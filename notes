@@ -170,3 +170,14 @@ prebuilts/gdb/linux-x86/bin/gdb vmlinux
 (gdb) print /x &snd_pcm_stream_lock_irq
 $1 = 0xffff0000087ae3fc
 (gdb) disassemble /m 0xffff0000087ae3fc
+
+30. about linux console
+cmdline "console=xxx,yyy" ==> parse into and add to console_cmdline(driver name, minor index, option)
+uart_driver->cons (write, device, setup) ==> uart_add_one_port ==> uart_port->cons ==> uart_configure_port ==> register_console(uart_port->cons) ==> match console_cmdline ==> console->setup
+printk ==> vprintk_default ==> vprintk_emit ==> console_trylock, console_unlock ==> console_cont_flush ==>call_console_drivers ==> console->write
+console->device() == uart_console_device ==> (console->data == uart_driver)->tty_driver, console->index
+tty_init ==> cdev_add(&console_cdev, MKDEV(TTYAUX_MAJOR=5, 1), 1) + register_chrdev_region(MKDEV(TTYAUX_MAJOR=5, 1), 1, "/dev/console")
+console_cdev->console_fops->tty_open ==> device=inode->i_rdev==MKDEV(TTYAUX_MAJOR=5, 1) ==> \
+    tty_open_by_driver ==> tty_lookup_driver ==> console_device ==> console->device()
+                       ==> tty_driver_lookup_tty(tty_driver, index) ==> tty_struct* tty = driver->ttys[idx]; 
+                       0=> tty_init_dev ==> alloc_tty_struct(index) + tty_driver_install_tty ==> uart_install ==> tty_standard_install ==> driver->ttys[tty->index] = tty;
