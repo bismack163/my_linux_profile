@@ -181,3 +181,11 @@ console_cdev->console_fops->tty_open ==> device=inode->i_rdev==MKDEV(TTYAUX_MAJO
     tty_open_by_driver ==> tty_lookup_driver ==> console_device ==> console->device()
                        ==> tty_driver_lookup_tty(tty_driver, index) ==> tty_struct* tty = driver->ttys[idx]; 
                        0=> tty_init_dev ==> alloc_tty_struct(index) + tty_driver_install_tty ==> uart_install ==> tty_standard_install ==> driver->ttys[tty->index] = tty;
+
+41. graph function trace
+echo 0 > /sys/kernel/debug/tracing/tracing_on
+cat /sys/kernel/debug/tracing/available_tracers 
+echo function_graph > /sys/kernel/debug/tracing/current_tracer 
+echo test_irq_thread_fn > /sys/kernel/debug/tracing/set_graph_function 
+echo 1 > /sys/kernel/debug/tracing/tracing_on
+cat /sys/kernel/debug/tracing/trace
