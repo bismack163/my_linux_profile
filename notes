@@ -189,3 +189,7 @@ echo function_graph > /sys/kernel/debug/tracing/current_tracer
 echo test_irq_thread_fn > /sys/kernel/debug/tracing/set_graph_function 
 echo 1 > /sys/kernel/debug/tracing/tracing_on
 cat /sys/kernel/debug/tracing/trace
+
+42 dump all processes
+sudo find . -name stack > /tmp/sl
+while read p; do echo "$p" >> /tmp/sd; cat $(dirname "$p")/cmdline >> /tmp/sd; cat $(dirname "$p")/comm >> /tmp/sd; cat $p >> /tmp/sd; done < /tmp/sl
