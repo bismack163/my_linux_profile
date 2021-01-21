@@ -193,3 +193,29 @@ cat /sys/kernel/debug/tracing/trace
 42 dump all processes
 sudo find . -name stack > /tmp/sl
 while read p; do echo "$p" >> /tmp/sd; cat $(dirname "$p")/cmdline >> /tmp/sd; cat $(dirname "$p")/comm >> /tmp/sd; cat $p >> /tmp/sd; done < /tmp/sl
+
+43. yocto, add build capability on target
+Add to IMAGE_INSTALL: packagegroup-core-buildessential numactl numactl-dev kernel-devsrc
+For kernel module build: 
+cd /usr/src/kernel; make scripts; make modules_prepare
+copy arch/x86/include/generated/ to /lib/modules/<`uname -r`>/build/ if not exist; 
+
+44. compress log
+dmesg -w | split -l 200 --filter='cat > $FILE && gzip $FILE'
+
+45. rpm
+rpm -ql crontabs
+rpm -qf ps
+dnf repoquery -l crontabs
+dnf --enablerepo=PowerTools install xxx
+dnf --enablerepo=PowerTools search xxx
+
+46. ssh tar
+ssh root@10.42.0.203 "tar czf - /bin" | tar zxf -
+ssh root@10.42.0.203 "tar czf - /bin" | cat > bin.tar.gz
+ssh root@10.42.0.203 "cat /gos_images/win10-ltsc.img" | gzip > win10.gzip
+
+47. ffmpeg
+transcode: ffmpeg -i Android\ VM\ +\ win10\ VM.mp4 -vcodec h264 -acodec aac -strict -2 Android\ VM\ +\ win10\ VM.m4v
+subtile: ffmpeg -i Android\ VM\ +\ win10\ VM.m4v -vf "subtitles='Android VM + win10 VM_Subtitle_Export/Android VM + win10 VM.srt':force_style='Fontsize=18,PrimaryColour=&H0000ff&'" -c:a copy Android\ VM\ +\ win10\ VM-sub.m4v
+
