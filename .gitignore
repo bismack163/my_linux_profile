@@ -1,5 +1,6 @@
-*
 !*bash*
 !*vim*
 !.vim/*
 !.gitignore
+!tmux/*
+!exp

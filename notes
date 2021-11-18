@@ -219,3 +219,18 @@ ssh root@10.42.0.203 "cat /gos_images/win10-ltsc.img" | gzip > win10.gzip
 transcode: ffmpeg -i Android\ VM\ +\ win10\ VM.mp4 -vcodec h264 -acodec aac -strict -2 Android\ VM\ +\ win10\ VM.m4v
 subtile: ffmpeg -i Android\ VM\ +\ win10\ VM.m4v -vf "subtitles='Android VM + win10 VM_Subtitle_Export/Android VM + win10 VM.srt':force_style='Fontsize=18,PrimaryColour=&H0000ff&'" -c:a copy Android\ VM\ +\ win10\ VM-sub.m4v
 
+48. pinctrl:
+create_pinctrl --> dts --> pinctrl_register_map --> LIST_HEAD(pinctrl_maps)
+pinctrl_get --> create_pinctrl 
+
+49. swap cache, buffer cache
+recorder app --> write to slow tf card --> dirty buffer cache growing
+app create a lot of bitmap --> memory native alloc --> GC --> de-fragment --> ? --> pending for a long time
+                                                   --> drop dirty buffer cache --> write to slow tf card
+												   --> why not swap to zram to free up memory?
+https://zhuanlan.zhihu.com/p/104271905
+https://wiki.archlinux.org/title/Cgroups#Ad-hoc_groups
+https://serverfault.com/questions/938431/is-there-a-way-to-force-a-single-process-to-swap-most-all-of-its-memory-to-disk
+
+kernel points:
+

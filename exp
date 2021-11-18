@@ -1,0 +1,92 @@
+1. USB spurious interrupts:
+In dwc3, interrupts are handled with separate top and bottom
+halves. In the top half handler, we verify that dwc3 is the source of
+interrupts by checking that GEVNTCOUNT0 register has a valid number of
+events. We also do a write to GEVNTSIZ0 register to set the mask bit.
+
+Once mask bit is set, dwc3 will lower the interrupt request.
+
+However, PCI uses posted writes, which renders the completion of the
+write operation non-deterministic. This creates a race condition
+between the completition of the write and the return from interrupt.
+
+If we return from interrupt before write is complete, top half will
+reenter which will cause of loose interrupt events.
+
+Another issue can happen on systems using MSI/MSI-X. These systems
+don't have physical interrupt line and rely on DWORD writes to a
+specific address in order to trigger and clear interrupt service
+requests. In this situation, another race condition can happen: that
+between clearing MSI/MSI-X with a DWORD write and return from
+interrupt.
+
+Because of these two distinct cases, the fix here is two-fold:
+
+(1) read GEVNTSIZ0 register after writing it, in order to flush the
+	previous posted write. This will guarantee that mask bit is
+	set before return from interrupt.
+
+(2) check if we're already handling the bottom half for our event
+	buffer and exit early without touching GEVNTCOUNT0 register.
+
+Note that (2) is very unlikely to happen, since the extra read
+mentioned at (1) will impose an extra delay of a few microseconds due
+to the DWORD read itself. We still want to be extra safe, so the check
+was added.
+
+
+2. BT 8250 UART
+enable/disable DMA mode to narrow down
+uart->tx_dma --> serial8250_tx_dma --> __dma_tx_complete callback --> serial8250_tx_dma
+idma64_irq --> vchan_cookie_complete --> tasklet --> callback complete
+uart irq --> rx_dma -->dmaengine_ submit --> __dma_rx_complete
+               |
+			   +--> rx_running ? --> return 0
+
+uart irq --> rx_dma -->dmaengine_ submit --> __dma_rx_complete --> re-enable irq
+               |
+			   +--> rx_running ? --> already complete ? --> disable irq --> return 0;
+			                                |
+											+--> return 0
+			   
+
+3.  swap cache, buffer cache
+recorder app --> write to slow tf card --> dirty buffer cache growing
+app create a lot of bitmap --> memory native alloc --> GC --> de-fragment --> ? --> pending for a long time
+                                                   --> drop dirty buffer cache --> write to slow tf card
+                                                   --> why not swap to zram to free up memory?
+
+4. dump stack
+
+5. trace kvm:
+cat /sys/kernel/debug/kvm/1321-15/vcpu0/tsc-offset
+echo 'x86-tsc' > trace_clock
+
+
+
+
+memory barriers:
+independent memory operations are effectively performed in random order, but this can be a problem in CPU-CPU interaction and for I/O
+CPU tricks: reordering, deferral and combination of memory operation; speculative loads; speculative branch prediction; caching
+need some way to instruct the compiler and CPU to restrict the order
+
+cpu_relax: low power consumption or yeild to hyper-thread cpu
+
+spinlock rw_lock
+if the spinlocks are never used in interrupt handlers, you can use the non-irq versions::
+spin_lock();
+spin_unlock();
+
+if you have interrupts play with the spinlock:
+spin_lock
+...
+  <- interrupts comes in on the same CPU:
+		 spin_lock()
+
+that's why spinlock_irq only need to disable local irq
+
+RCU readers need not acquire any locks
+
+
+CFS nice value -20~19 -20=highest priority
+CFS set time slice to run without being preempted
