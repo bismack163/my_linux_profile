@@ -234,3 +234,5 @@ https://serverfault.com/questions/938431/is-there-a-way-to-force-a-single-proces
 
 kernel points:
 
+50. UART console may lose data, e.g. when cat /sys/kernel/debug/pinctrl/xxx , long output may lose some lines
+
